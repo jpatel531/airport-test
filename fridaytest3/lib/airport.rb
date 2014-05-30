@@ -36,7 +36,7 @@ class Airport
 	end
 
 	def release(plane)
-		raise StormyWeather.new("Too stormy bro") if stormy?
+		raise StormyWeather.new("Too stormy bro") if self.weather_condition == "stormy"
 		begin
 		planes.delete(plane)
 		rescue StormyWeather => e 

@@ -1,11 +1,6 @@
 module WeatherConditions
 
-	def sunny?
-		rand <= 0.9
+	def weather_condition
+		rand <= 0.9 ? "sunny" : "stormy"
 	end
-
-	def stormy?
-		rand > 0.9
-	end
-
 end
