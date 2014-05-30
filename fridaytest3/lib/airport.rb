@@ -28,6 +28,7 @@ class Airport
 
 	def receive(plane) 
 		raise AtFullCapacity.new("We're full bro") if full?
+		raise StormyWeather.new("Too stormy bro") if weather_condition == "stormy"
 		begin
 		planes << plane
 		rescue AtFullCapacity => e
@@ -36,7 +37,7 @@ class Airport
 	end
 
 	def release(plane)
-		raise StormyWeather.new("Too stormy bro") if self.weather_condition == "stormy"
+		raise StormyWeather.new("Too stormy bro") if weather_condition == "stormy"
 		begin
 		planes.delete(plane)
 		rescue StormyWeather => e 
