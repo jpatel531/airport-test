@@ -1,4 +1,8 @@
+require_relative 'weather_conditions.rb'
+
 class Airport
+
+	include WeatherConditions
 
 	attr_accessor :capacity
 
@@ -23,7 +27,7 @@ class Airport
 	end
 
 	def receive(plane) 
-		raise AtFullCapacity.new("We're full bro") if self.full?
+		raise AtFullCapacity.new("We're full bro") if full?
 		begin
 		planes << plane
 		rescue AtFullCapacity => e
@@ -32,9 +36,15 @@ class Airport
 	end
 
 	def release(plane)
+		raise StormyWeather.new("Too stormy bro") if stormy?
+		begin
 		planes.delete(plane)
+		rescue StormyWeather => e 
+			e.message
+		end 
 	end
 
 end
 
 class AtFullCapacity < Exception ; end
+class StormyWeather < Exception ; end
