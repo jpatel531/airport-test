@@ -30,7 +30,7 @@ class Airport
 		raise AtFullCapacity.new("We're full bro") if full?
 		raise StormyWeather.new("Too stormy bro") if weather_condition == "stormy"
 		begin
-		planes << plane
+			planes << plane
 		rescue AtFullCapacity => e
 			e.message
 		end
@@ -39,12 +39,29 @@ class Airport
 	def release(plane)
 		raise StormyWeather.new("Too stormy bro") if weather_condition == "stormy"
 		begin
-		planes.delete(plane)
+			planes.delete(plane)
 		rescue StormyWeather => e 
 			e.message
 		end 
 	end
 
+	def receive_all(planes)
+		raise StormyWeather.new("Too stormy bro") if weather_condition == "stormy"
+		begin
+			planes.each {|plane| plane.land_in self}
+		rescue StormyWeather => e
+			e.message
+		end
+	end
+
+	def release_all(planes)
+		raise StormyWeather.new("Too stormy bro") if weather_condition == "stormy"
+		begin 
+			planes.each {|plane| plane.take_off_from self}
+		rescue StormyWeather => e
+			e.message
+		end
+	end
 end
 
 class AtFullCapacity < Exception ; end
