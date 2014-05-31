@@ -26,42 +26,23 @@ class Airport
 		plane_count == capacity
 	end
 
-	def receive(plane) 
+	def storm_checker
+		raise StormyWeather.new("Too stormy bro") if weather_condition == "stormy"
+	end
+
+	def capacity_checker
 		raise AtFullCapacity.new("We're full bro") if full?
-		raise StormyWeather.new("Too stormy bro") if weather_condition == "stormy"
-		begin
-			planes << plane
-		rescue AtFullCapacity => e
-			e.message
-		end
 	end
 
-	def release(plane)
-		raise StormyWeather.new("Too stormy bro") if weather_condition == "stormy"
-		begin
-			planes.delete(plane)
-		rescue StormyWeather => e 
-			e.message
-		end 
+	def can_receive?(plane) 
+		capacity_checker
+		storm_checker
 	end
 
-	def receive_all(planes)
-		raise StormyWeather.new("Too stormy bro") if weather_condition == "stormy"
-		begin
-			planes.each {|plane| plane.land_in self}
-		rescue StormyWeather => e
-			e.message
-		end
+	def can_release?(plane)
+		storm_checker
 	end
 
-	def release_all(planes)
-		raise StormyWeather.new("Too stormy bro") if weather_condition == "stormy"
-		begin 
-			planes.each {|plane| plane.take_off_from self}
-		rescue StormyWeather => e
-			e.message
-		end
-	end
 end
 
 class AtFullCapacity < Exception ; end
