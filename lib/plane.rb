@@ -11,7 +11,7 @@ class Plane
 	end
 
 	def land_in(airport)
-		airport.can_receive? self
+		airport.can_receive_plane?
 		begin
 			airport.planes << self
 			self.status = "landed"
@@ -24,7 +24,7 @@ class Plane
 
 
 	def take_off_from(airport)
-		airport.can_release? self
+		airport.can_release_plane?
 		begin		
 			airport.planes.delete(self)
 			self.status = "flying"

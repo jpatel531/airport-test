@@ -1,8 +1,10 @@
-require_relative 'weather_conditions.rb'
+require_relative 'weather_conditions'
+require_relative 'air_traffic_control'
 
 class Airport
 
-	include WeatherConditions
+
+	include AirTrafficControl
 
 	attr_accessor :capacity
 
@@ -22,28 +24,5 @@ class Airport
 		planes.count 
 	end
 
-	def full?
-		plane_count == capacity
-	end
-
-	def storm_checker
-		raise StormyWeather.new("Too stormy bro") if weather_condition == "stormy"
-	end
-
-	def capacity_checker
-		raise AtFullCapacity.new("We're full bro") if full?
-	end
-
-	def can_receive?(plane) 
-		capacity_checker
-		storm_checker
-	end
-
-	def can_release?(plane)
-		storm_checker
-	end
 
 end
-
-class AtFullCapacity < Exception ; end
-class StormyWeather < Exception ; end
