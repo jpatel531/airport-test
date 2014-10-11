@@ -1,0 +1,8 @@
+[
+  {
+    "commit": "fce9649d163609a79d5d61aee3f13b5c1decfc4d",
+    "instruction": "turn this into a constant",
+    "source": "lib/airport.rb",
+    "spec": "spec/airport_spec.rb"
+  }
+]
